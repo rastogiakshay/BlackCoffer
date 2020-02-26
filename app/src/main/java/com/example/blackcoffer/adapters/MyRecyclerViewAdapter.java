@@ -50,7 +50,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull final MyRecyclerViewAdapter.ViewHolder holder, int position) {
-        tempString = folders.get(position).getFolderName();
+
         holder.set_Name.setText(folders.get(position).getFolderName());
         holder.set_Disc.setText(folders.get(position).getFolderDisc());
 
@@ -59,6 +59,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                //tempString = folders.get(new onClickListener{void onEntryclick()} .getFolderName());
                 Fragment myFragment = new FolderFragment(tempString);
                 fragmentTransaction = activity.getSupportFragmentManager().beginTransaction().replace(R.id.master_layout, myFragment);
                 fragmentTransaction.addToBackStack(null);
@@ -88,12 +89,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         @Override
         public void onClick(View view) {
-        mOnClickListener.onEntryClick(view);
+        mOnClickListener.onEntryClick(getLayoutPosition());
+        tempString = folders.get(getLayoutPosition()).getFolderName();
         }
     }
 
 
     public interface onClickListener{
-        void onEntryClick(View view);
+        void onEntryClick(int position);
     }
 }
