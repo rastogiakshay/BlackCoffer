@@ -22,6 +22,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private List<Folder> folders;
     private View mView;
 
+
     public MyRecyclerViewAdapter() {
         folders = new ArrayList<>();
         folders.add(new Folder("FolderOne","folder"));
@@ -48,14 +49,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.set_Name.setText(folders.get(position).getFolderName());
         holder.set_Disc.setText(folders.get(position).getFolderDisc());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment folderFragment = new FolderFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.tile,folderFragment).addToBackStack(null).commit();
+                Fragment myFragment = new FolderFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.master_layout, myFragment).addToBackStack(null).commit();
             }
         });
+
     }
 
     @Override
@@ -63,7 +66,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return folders.size();
     }
 
-    public class ViewHolder extends  RecyclerView.ViewHolder{
+    public class ViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
+
         private final TextView set_Name;
         private final TextView set_Disc;
         //private final View mView;
@@ -72,6 +76,21 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             mView = itemView;
             set_Name = itemView.findViewById(R.id.folder_name);
             set_Disc = itemView.findViewById(R.id.folder_disc);
+
         }
+
+        @Override
+        public void onClick(View view) {
+        mOnClickListener.onEntryClick(view);
+        }
+    }
+    private onClickListener mOnClickListener;
+
+    public interface onClickListener{
+        void onEntryClick(View view);
+    }
+
+    public void setOnClickListener(onClickListener onClickListener){
+        mOnClickListener = onClickListener;
     }
 }
