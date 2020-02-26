@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blackcoffer.Folder;
@@ -16,11 +17,13 @@ import com.example.blackcoffer.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+    private onClickListener mOnClickListener;
     private List<Folder> folders;
-    private View mView;
+    private FragmentTransaction fragmentTransaction;
+    private String tempString;
+
 
 
     public MyRecyclerViewAdapter() {
@@ -46,16 +49,21 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyRecyclerViewAdapter.ViewHolder holder, int position) {
+        tempString = folders.get(position).getFolderName();
         holder.set_Name.setText(folders.get(position).getFolderName());
         holder.set_Disc.setText(folders.get(position).getFolderDisc());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+            TextView set_frag_text;
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new FolderFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.master_layout, myFragment).addToBackStack(null).commit();
+                Fragment myFragment = new FolderFragment(tempString);
+                fragmentTransaction = activity.getSupportFragmentManager().beginTransaction().replace(R.id.master_layout, myFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
             }
         });
 
@@ -70,12 +78,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         private final TextView set_Name;
         private final TextView set_Disc;
-        //private final View mView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mView = itemView;
             set_Name = itemView.findViewById(R.id.folder_name);
             set_Disc = itemView.findViewById(R.id.folder_disc);
+
 
         }
 
@@ -84,13 +91,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         mOnClickListener.onEntryClick(view);
         }
     }
-    private onClickListener mOnClickListener;
+
 
     public interface onClickListener{
         void onEntryClick(View view);
-    }
-
-    public void setOnClickListener(onClickListener onClickListener){
-        mOnClickListener = onClickListener;
     }
 }

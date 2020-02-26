@@ -20,7 +20,8 @@
             android:layout_marginStart="370dp"
             android:layout_marginTop="25dp"
             android:padding="16dp"
-            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+            app:srcCompat="@drawable/ic_more_vert_black_24dp"
+            android:onClick="showPopUp"/>
 
         <FrameLayout
             android:layout_width="match_parent"

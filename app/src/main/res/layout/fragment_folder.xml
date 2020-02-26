@@ -15,7 +15,7 @@
         android:id="@+id/frag_frame">
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/frag_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
