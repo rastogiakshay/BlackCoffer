@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:background="#323232"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:paddingTop="5dp">
 
     <FrameLayout
         android:id="@+id/tile"
@@ -21,34 +22,43 @@
             android:layout_marginTop="25dp"
             android:padding="16dp"
             app:srcCompat="@drawable/ic_more_vert_black_24dp"
-            android:onClick="showPopUp"/>
+            android:onClick="showPopUp"
+            android:contentDescription="@string/menu_options"/>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="50dp">
+            android:layout_marginEnd="50dp"
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/folder_name"
                 android:layout_width="match_parent"
+                android:textSize="25sp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="45dp"
-                android:text="FolderName" />
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginStart="45dp"
+                android:text="@string/foldername" />
 
             <TextView
                 android:id="@+id/folder_disc"
+                android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="45dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginStart="45dp"
                 android:layout_marginTop="50dp"
-                android:text="FolderDisc" />
+                android:text="@string/folderdisc" />
         </FrameLayout>
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="45dp"
+            android:layout_width="55dp"
             android:layout_height="100dp"
             android:padding="5dp"
-            app:srcCompat="@android:drawable/sym_contact_card" />
+            app:srcCompat="@android:drawable/sym_contact_card"
+            android:contentDescription="@string/shows_the_folder_image" />
     </FrameLayout>
 </LinearLayout>

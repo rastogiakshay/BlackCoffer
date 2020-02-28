@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-    private onClickListener mOnClickListener;
     private List<Folder> folders;
     private FragmentTransaction fragmentTransaction;
     private String tempString;
@@ -49,17 +48,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyRecyclerViewAdapter.ViewHolder holder, final int position) {
 
         holder.set_Name.setText(folders.get(position).getFolderName());
         holder.set_Disc.setText(folders.get(position).getFolderDisc());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-            TextView set_frag_text;
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                //tempString = folders.get(new onClickListener{void onEntryclick()} .getFolderName());
+                tempString = folders.get(position).getFolderName();                 //Storing the clicked folderName.
                 Fragment myFragment = new FolderFragment(tempString);
                 fragmentTransaction = activity.getSupportFragmentManager().beginTransaction().replace(R.id.master_layout, myFragment);
                 fragmentTransaction.addToBackStack(null);
@@ -75,27 +73,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return folders.size();
     }
 
-    public class ViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends  RecyclerView.ViewHolder {
 
         private final TextView set_Name;
         private final TextView set_Disc;
-        public ViewHolder(@NonNull View itemView) {
+
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             set_Name = itemView.findViewById(R.id.folder_name);
             set_Disc = itemView.findViewById(R.id.folder_disc);
-
-
         }
 
-        @Override
-        public void onClick(View view) {
-        mOnClickListener.onEntryClick(getLayoutPosition());
-        tempString = folders.get(getLayoutPosition()).getFolderName();
-        }
-    }
-
-
-    public interface onClickListener{
-        void onEntryClick(int position);
     }
 }
